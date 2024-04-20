@@ -9,13 +9,21 @@
 // add or remove necessary headers as you please
 
 
+
+
 #endif
+
+
 
 
 #include "schedwork.h"
 
 
+
+
 using namespace std;
+
+
 
 
 // a constant that can be used to indicate an INVALID
@@ -26,12 +34,22 @@ static const Worker_T INVALID_ID = (unsigned int)-1;
 
 
 
+
+
+
+
 // Add prototypes for any helper functions here
 
 
 
 
+
+
+
+
 // Add your implementation of schedule() and other helper functions here
+
+
 
 
 bool schedule(
@@ -50,6 +68,8 @@ bool schedule(
     //maxShifts is column
 
 
+
+
 /*
 n x k
        W  W  W  W
@@ -61,15 +81,23 @@ n x k
            0  1  2  3
 
 
+
+
            |  |  |  |
            |  |  |  |
            V  V  V  V
+
+
 
 
 Day 0 -->  1  1  1  1
 Day 1 -->  1  0  1  0
 Day 2 -->  1  1  0  1
 Day 3 -->  1  0  0  1
+
+
+
+
 
 
 
@@ -98,6 +126,8 @@ Return to go back up to the previous row and find the next 1 true boolean value 
 You are now back at row/day 0 and go onto the next 1 which is [Day 0][Worker1]
 
 
+
+
 [Day0][Worker1]
 Recurse to the next row and col 0, now the amount of 0 index ID worker = 1 and  1 index ID worker = 1    [Day1][Worker0]  0 index ID worker = 1, 1 index ID worker = 1  
 Recurse to the next row and col 0, now the amount of 0 index ID worker is 2 and the amount of 1 index ID worker is 1    [Day2][Worker0]    0 index ID worker = 2, 1 index ID worker = 1
@@ -105,6 +135,8 @@ Recurse to the next row and col 0, now the amount of 0 index ID worker is 3 and 
 Return to go back up to the previous row and find the next 1 true boolean value from availabilityMatrix [Day 2][Worker1]   0 index ID worker = 1, 1 index ID worker = 2
 Recurse to the next row and col 0, now the amount of 0 index ID worker is 2 and the amount of 1 index ID worker is 2. GOOD. Go next row which is empty which returns true. [Day3][Worker0]      0 index ID worker = 2, 1 index ID worker = 2
 Since it is true now, go all the way back up to the day 0 row, and sched pushback 1 [Day0][Worker1] which on the top row since that is the one that started this recursion.
+
+
 
 
 [Day0][Worker3]
@@ -117,6 +149,8 @@ Recurse to the next row and col 0, now      0 index ID worker = 2, 1 index ID wo
 Since it is true now, keep returning true all the way back up to the day 0 row, and sched pushback 1 [Day0][Worker2] which is on the top row since that is the one that started this recursion
 
 
+
+
 Now go find the next 1 true boolean on the same row [Day0][Worker3]
 Recurse to the next row and col 0, now      0 index ID worker = 1, 2 index ID worker = 1    [Day1][Worker0]
 Recurse to the next row and col 0, now      0 index ID worker = 2, 2 index ID worker = 1    [Day2][Worker0]
@@ -126,7 +160,17 @@ Recurse to the next row and col 0, now      0 index ID worker = 2, 1 index ID wo
 Since it is true now, keep returning true all the way back up to the day 0 row, and sched pushback 1 [Day0][Worker2] which is on the top row since that is the one that started this recursion
 
 
+
+
 //------------------------------------------------------------------>
+
+
+
+
+
+
+
+
 
 
 
@@ -152,8 +196,12 @@ m = 2 means that is a maximum of 2 shifts
 d = 2 means that there can only be 2 workers per day
 
 
+
+
 To count the m's you go down the column and count the same id number
 To count the amount of d's, just go count from left to right on the row which is 2
+
+
 
 
 */
@@ -188,6 +236,10 @@ To count the amount of d's, just go count from left to right on the row which is
 
 
 
+
+
+
+
 bool Schedule_Recurse_Helper(
     const AvailabilityMatrix& avail,
     const size_t dailyNeed, //d go on the same row
@@ -201,6 +253,8 @@ bool Schedule_Recurse_Helper(
 {
 
 
+
+
 //START AT ROW 2 FROM THE PHOTO WHERE IT IS NOT SUPPOSE TO RETURN TRUE WHEN GOING DOWN
     /*
          It is likely easiest to recurse over each place in the schedule (i.e. the 2D sched matrix).
@@ -210,10 +264,14 @@ bool Schedule_Recurse_Helper(
          be beneficial to look it over.
 
 
+
+
         You may have up to three loops in your code: two for setup and one in your recursive search.
     */
     cout << "daily NEED/idCOUTNER: " << dailyNeed << endl;
     if(row == avail.size()){
+
+
 
 
         //Make another if condition that detects the size of the avail with the current row we are on and see if the size is equal to the dailyNeed.
@@ -228,6 +286,8 @@ bool Schedule_Recurse_Helper(
     }else if(col == 0 && avail[row][col] == 1 && avail_Recurse_Helper_Horizontal(avail, dailyNeed, maxShifts, sched, row, col + 1, dailyNeed, avail[row][col], avail[row][col], shifts_each_worker)){
 
 
+
+
               cout << "IT IS VERY TRUE HORIZONTAL RIGHT" << endl;
               cout << "SHIFT: " << shifts_each_worker[col] << endl;
              
@@ -237,14 +297,7 @@ bool Schedule_Recurse_Helper(
               --shifts_each_worker[col];
               sched[row].push_back(col);
 
-
-               cout << endl;
-              cout << endl;
-              for(size_t i = 0; i < shifts_each_worker.size(); ++i){
-                  cout << "shifts_each_worker: " << shifts_each_worker[i] << endl;
-              }
-              cout << endl;
-              cout << endl;
+           
               if(Schedule_Recurse_Helper(avail, dailyNeed, maxShifts, sched, row + 1, 0, 0, shifts_each_worker)){
                   return true;
               }
@@ -252,18 +305,11 @@ bool Schedule_Recurse_Helper(
     }else if(col == 0 && avail[row][col] == 0 && avail_Recurse_Helper_Horizontal_Zero(avail, dailyNeed, maxShifts, sched, row, col + 1, dailyNeed + 1, avail[row][col], avail[row][col], shifts_each_worker)){
               cout << "MAYBE FIX SHIFT HERE" << endl;
 
+
               if(col + 1 == avail[row].size()){ //If the next column is just an empty column, that means that 0 is by itself on the row which should return false
                     return false;
               }
-               cout << endl;
-              cout << endl;
-              for(size_t i = 0; i < shifts_each_worker.size(); ++i){
-                  cout << "shifts_each_worker: " << shifts_each_worker[i] << endl;
-              }
-              cout << endl;
-              cout << endl;
-
-
+          
               if(Schedule_Recurse_Helper(avail, dailyNeed, maxShifts, sched, row + 1, 0, 0, shifts_each_worker)){
                   return true;
               }
@@ -294,14 +340,11 @@ bool Schedule_Recurse_Helper(
           cout << "Daily NEED COUNTER: " << dailyNeed_counter << endl;
           cout << "ROW " << row << " COL " << col << " FOR THIS SCHEDULE RECURSE HELPER" << endl;
 
-          cout << endl;
-          cout << endl;
-          for(size_t i = 0; i < shifts_each_worker.size(); ++i){
-              cout << "shifts_each_worker: " << shifts_each_worker[i] << endl;
-          }
-          cout << endl;
-          cout << endl;
+
+        
          //else{
+
+
 
 
 /*
@@ -318,7 +361,11 @@ bool Schedule_Recurse_Helper(
                 //if(Schedule_Recurse_Helper(avail, dailyNeed, maxShifts, sched, )){
 
 
+
+
                 //}
+
+
 
 
                 //if(dailyNeed_counter == dailyNeed - 1 && col == avail[row].size() - 1 && avail[row][col] == 0){ //If this is the last thing you need to add to sched[current row] and all that is left is a zero on the last index of the current row, then we need to find 1 from the beginning of the current row
@@ -334,22 +381,15 @@ bool Schedule_Recurse_Helper(
                                 cout << "*it value " << *it << " is found at the index " << it - temp.begin() << endl;
                                 sched[row].push_back(it - temp.begin());
                                 --shifts_each_worker[it - temp.begin()];
-                                for(size_t z = 0; z < sched[row].size(); ++z){
-                                    cout << "SCHEDULE UPDATED: " << sched[row][z] << endl;
-                                }
-                                cout << endl;
-                                cout << endl;
-                                for(size_t o = 0; o < shifts_each_worker.size(); ++o){
-                                    cout << "shifts_each_worker: " << shifts_each_worker[o] << endl;
-                                }
-                                cout << endl;
-                                cout << endl;
+                           
                                 if(Schedule_Recurse_Helper(avail, dailyNeed, maxShifts, sched, row, i + 1, dailyNeed_counter + 1, shifts_each_worker)){    //Make the col passed be i + 1 in order to ignore the current sched value push backed
                                     //--shifts_each_worker[i];
                                     //vector<bool>::iterator it;
                                     //vector<bool> temp = avail[row];
                                     //it = std::find(temp.begin(), temp.end(), true);
                                     //cout << "*it value " << *it << " is found at the index " << it - temp.begin() << endl;
+
+
 
 
                                     return true;    //Backtracking makes it that you add something before calling recursive function if condition and then if it fails, then you correct it by doing the opposite and return false after all of the loop is done
@@ -366,23 +406,9 @@ bool Schedule_Recurse_Helper(
                             cout << "AVAIL IS TRUE" << endl;
                             sched[row].push_back(i);
                             --shifts_each_worker[i];
-                            cout << endl;
-                            cout << endl;
-                            for(size_t u = 0; u < sched[row].size(); ++u){
-                                cout << "SCHED STUFF: " << sched[row][u] << endl;
-                            }
-                            cout << endl;
-                            cout << endl;
+                     
 
-                            cout << "ROW AND COL CHECKER: " << row << " " << i << endl;
-                            cout << "ROW AND COL + 1 CHECKER" << row << " " << i + 1 << endl;
-
-
-                             cout << endl;
-                              cout << endl;
-                              for(size_t p = 0; p < shifts_each_worker.size(); ++p){
-                                  cout << "shifts_each_worker: " << shifts_each_worker[p] << endl;
-                              }
+                         
                               cout << endl;
                               cout << endl;
                             if(i + 1 == avail[row].size() && dailyNeed_counter < dailyNeed - 1){ //If these two equal, that means that there is still one more we can add to sched[current row] so we will start from the beginning of the same row again and add the first 1 boolean value
@@ -392,18 +418,8 @@ bool Schedule_Recurse_Helper(
                                     cout << "*it value " << *it << " is found at the index " << it - temp.begin() << endl;
                                     sched[row].push_back(it - temp.begin());
                                     --shifts_each_worker[it - temp.begin()];
-                                    for(size_t z = 0; z < sched[row].size(); ++z){
-                                        cout << "SCHEDULE UPDATED: " << sched[row][z] << endl;
-                                    }
-
-
-                                     cout << endl;
-                                      cout << endl;
-                                      for(size_t o = 0; o < shifts_each_worker.size(); ++o){
-                                          cout << "shifts_each_worker: " << shifts_each_worker[o] << endl;
-                                      }
-                                      cout << endl;
-                                      cout << endl;
+                                  
+                                   
                                     if(Schedule_Recurse_Helper(avail, dailyNeed, maxShifts, sched, row, i + 1, dailyNeed_counter + 2, shifts_each_worker)){    //Make the col passed be i + 1 in order to ignore the current sched value push backed
                                         //--shifts_each_worker[i];
                                         //vector<bool>::iterator it;
@@ -412,11 +428,14 @@ bool Schedule_Recurse_Helper(
                                         //cout << "*it value " << *it << " is found at the index " << it - temp.begin() << endl;
 
 
+
+
                                         return true;    //Backtracking makes it that you add something before calling recursive function if condition and then if it fails, then you correct it by doing the opposite and return false after all of the loop is done
                                     }
                             }else{
 
-                                    cout << "OVER HERE YO" << endl;
+
+                                   
                                     if(Schedule_Recurse_Helper(avail, dailyNeed, maxShifts, sched, row, i + 1, dailyNeed_counter + 1, shifts_each_worker)){    //Make the col passed be i + 1 in order to ignore the current sched value push backed
                                         //--shifts_each_worker[i];
                                         return true;
@@ -425,27 +444,24 @@ bool Schedule_Recurse_Helper(
                            
 
 
+
+
                             sched[row].pop_back();
                             ++shifts_each_worker[i];
                             //return Schedule_Recurse_Helper(); //Make the col passed be i + 1 in order to ignore the current sched value push backed
                         }
-                        cout << "------------------------>" << endl;
+                       
                         if(i == avail[row].size() - 1 && avail[row][i] == 1 && dailyNeed_counter < dailyNeed){
-                            cout << "GET OVER HERE YOU THING" << endl;
-                            for(size_t l = 0; l < sched[row].size(); ++l){
-                                //cout << sched[row][l] << " ";
-                                cout << sched[row][l] << endl;
-                               
-                            }
-                            cout << "SCHED ROW 0 is: " << sched[row][0] << endl;
-                            cout << endl;
+                           
                             vector<bool>::iterator it;
                             vector<bool> temp = avail[row];
+
 
                             //Loop it for each sched[row][p]
                             it = std::find(temp.begin() + sched[row][0] + 1, temp.end(), 1);
                             sched[row].push_back(it - temp.begin());
                             --shifts_each_worker[it-temp.begin()];
+
 
                             //cout << "*it has a value of " << *it << " at the index of " << it - temp.begin() << endl;
 /*
@@ -460,14 +476,7 @@ bool Schedule_Recurse_Helper(
                             }
                            
 */
-                            cout << endl;
-                            cout << endl;
 
-                            for(size_t o = 0; o < shifts_each_worker.size(); ++o){
-                                cout << "shifts_each_worker: " << shifts_each_worker[o] << endl;
-                            }
-                            cout << endl;
-                            cout << endl;
 
                             if(Schedule_Recurse_Helper(avail, dailyNeed, maxShifts, sched, row, i + 1, dailyNeed_counter + 2, shifts_each_worker)){    //Make the col passed be i + 1 in order to ignore the current sched value push backed
                                         //--shifts_each_worker[i];
@@ -475,6 +484,8 @@ bool Schedule_Recurse_Helper(
                                         //vector<bool> temp = avail[row];
                                         //it = std::find(temp.begin(), temp.end(), true);
                                         //cout << "*it value " << *it << " is found at the index " << it - temp.begin() << endl;
+
+
 
 
                                         return true;    //Backtracking makes it that you add something before calling recursive function if condition and then if it fails, then you correct it by doing the opposite and return false after all of the loop is done
@@ -492,8 +503,16 @@ bool Schedule_Recurse_Helper(
 
 
 
+
+
+
+
        
    
+
+
+
+
 
 
 
@@ -501,7 +520,11 @@ bool Schedule_Recurse_Helper(
     //return true;
 
 
+
+
 }
+
+
 
 
 bool avail_Recurse_Helper_Horizontal(
@@ -521,6 +544,8 @@ bool avail_Recurse_Helper_Horizontal(
     This function will count the amount of 1's in the availabilityMatrix.
     The amount the amount of 1's is equal to the dailyNeed, then return true
 */
+
+
 
 
     if(col == avail[row].size()){
@@ -569,6 +594,8 @@ bool avail_Recurse_Helper_Horizontal(
             if(avail[row][col] == 1){   //If
 
 
+
+
             }
             return false;
            //return
@@ -579,6 +606,8 @@ bool avail_Recurse_Helper_Horizontal(
             sched[row].push_back(col);
             if(avail_Recurse_Helper_Horizontal(avail, dailyNeed, maxShifts, sched, row, col + 1, id_counter - 1, value, avail[row][col], shifts_each_worker)){
                 //if(avail[row][col] == 1){ //If it is 1, then push back
+
+
 
 
                 //sched[row].push_back(col);
@@ -597,6 +626,7 @@ bool avail_Recurse_Helper_Horizontal(
     }
 }
 
+
 bool avail_Recurse_Helper_Horizontal_Zero(  //This function runs when the row beginning starts with a zero as its boolean value
     const AvailabilityMatrix& avail,
     const size_t dailyNeed, //d go on the same row
@@ -613,6 +643,8 @@ bool avail_Recurse_Helper_Horizontal_Zero(  //This function runs when the row be
     This function will count the amount of 1's in the availabilityMatrix.
     The amount the amount of 1's is equal to the dailyNeed, then return true
 */
+
+
 
 
     if(col == avail[row].size()){
@@ -662,6 +694,8 @@ bool avail_Recurse_Helper_Horizontal_Zero(  //This function runs when the row be
             if(avail[row][col] == 1){   //If
 
 
+
+
             }
             return false;
            //return
@@ -672,6 +706,8 @@ bool avail_Recurse_Helper_Horizontal_Zero(  //This function runs when the row be
             sched[row].push_back(col);
             if(avail_Recurse_Helper_Horizontal_Zero(avail, dailyNeed, maxShifts, sched, row, col + 1, id_counter - 1, value, avail[row][col], shifts_each_worker)){
                 //if(avail[row][col] == 1){ //If it is 1, then push back
+
+
 
 
                 //sched[row].push_back(col);
@@ -737,8 +773,7 @@ bool avail_Recurse_Helper(
        
 
 
+
+
     }
 }
-
-
-
