@@ -63,79 +63,6 @@ std::set<std::string> wordle(
 
 
 
-
-
-
-
-
-
-    //for(size_t i = 0; i < in.size(); ++i){
-        //if(in[i] == '-'){
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //}
-    //}
-    //size_t dash_counter = 0;
-    //std::string temp = "";
-    //wordleDashInCounter(in, 0, dash_counter);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //if(dash_counter == floating.size()){
-        //cout << in << endl;
-        //cout << floating << endl;
-        //cout << "DASH COUNTER: " << dash_counter << endl;
-        //cout << "Floating SIZE: " << floating.size() << endl;
-
-
-
-
-
-
-
-
-
-
-
-
-        //size_t no_dash_counter = 0;
-        //wordleNoDashInCounter(in, 0, no_dash_counter);
-        //wordle_Floating_Recurse_Helper(result, in, floating, dict, float_map, "", in_size, 0, 0, 0, no_dash_counter);
-
-
-
-
-
-
-
-
-
-
-
-
     std::set<size_t> index_next_set;
 
 
@@ -230,6 +157,7 @@ void wordleNoDashInCounter(const std::string& in, size_t in_index, size_t& dash_
         wordleNoDashInCounter(in, in_index + 1, dash_no_counter);
     }
 }
+/*
 void wordle_Floating_Recurse_Helper(
     std::set<std::string>& result,
     const std::string& in,
@@ -275,7 +203,7 @@ void wordle_Floating_Recurse_Helper(
 
 
                 //if(floating.size() < in.size() - not_dash_in_index){
-      /*
+      
                 if(in.size() - no_dash_amount > floating.size()){ //If the amount of dashes is greater than the float size, that means that there are extra spaces to have a to z
                   //cout << "FLOATING.SIZE(): " << floating.size() << endl;
                   //cout << "Subtract: " << in.size() - not_dash_in_index << endl;
@@ -283,16 +211,16 @@ void wordle_Floating_Recurse_Helper(
                         wordle_Floating_Recurse_Helper(result, in, floating, dict, float_map, word + c, in_size - 1, in_index + 1, floating_index, not_dash_in_index, no_dash_amount);
                     }
                 }
-      */      
+         
                
-/*
+
                 //-------------------------------------> //CORRECT ABOVE
                 //Don't have an else statement so that the first recursion case can start at one "a" to "z" as one example case
                
                 for(char c = 'a'; c <= 'z'; ++c){
                     wordle_Floating_Recurse_Helper(result, in, floating, dict, float_map, word + c, in_size - 1, in_index + 1, floating_index, not_dash_in_index);
                 }
-*/          
+    
                
                
                
@@ -330,7 +258,7 @@ void wordle_Floating_Recurse_Helper(
     }
 }
 
-
+*/
 
 
 
@@ -476,54 +404,14 @@ floating_counter If all of the floating index value except for one
 being the blank space is in the word, keep recursing, or else return
 and go down a different recursion
 */
+/*
 bool wordle_Helper_Mid_Recursion_Check(
     const std::string& in,
     const std::string& floating,
     std::string partial_word,
     size_t in_index)
 {
-/*
-  size_t float_counter = 0;
-    for(size_t i = 0; i < floating.size(); ++i){
-        for(size_t j = 0; j < partial_word.size(); ++j){
-            if(floating[i] == partial_word[j]){
-                ++float_counter;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            }
-        }
-    }
-*/
 
 
 
@@ -570,15 +458,10 @@ bool wordle_Helper_Mid_Recursion_Check(
         return true;
     }
     return false;
-/*
-    if(floating_counter == floating.size()){  //If floating_counter is equal to floating.size() that means that the word does contain all the letters from floating
-        return true;
-    }
-    return false;
-*/  
+
 }
 
-
+*/
 
 
 
@@ -1501,7 +1384,7 @@ bool wordle_Helper_Recurse(
 
 
 
-
+/*
 
 
 bool isblank(string c){
@@ -1515,13 +1398,13 @@ bool isblank(string c){
     return size == 26;
 }
 
+*/
 
 
 
 
 
-
-
+/*
 size_t floating_index_counter(const string& word, char c){
     size_t counter = 0;
     for(size_t i = 0; i < word.size(); ++i){
@@ -1532,18 +1415,18 @@ size_t floating_index_counter(const string& word, char c){
     return counter;
 }
 
+*/
 
 
 
-
-
+/*
 void wordle_Helper_Recurse_Fill_In_A_To_Z(set<char>& a_to_z_set){
     for(char c = 'a'; c <= 'z'; ++c){
         a_to_z_set.insert(c);
     }
 }
 
-
+*/
 
 
 
