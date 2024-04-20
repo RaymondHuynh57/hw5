@@ -3,6 +3,8 @@
 
 #ifndef RECCHECK
 #include <vector>
+//Temporary
+//#include <map>
 #endif
 
 // type for the ID of a worker
@@ -36,6 +38,52 @@ bool schedule(
     const size_t dailyNeed,
     const size_t maxShifts,
     DailySchedule& sched
+);
+
+bool Schedule_Recurse_Helper(
+    const AvailabilityMatrix& avail,
+    const size_t dailyNeed, //d go on the same row
+    const size_t maxShifts, //m go down the column and count the same ID number
+    DailySchedule& sched,
+    size_t row,
+    size_t col,
+    size_t dailyNeed_counter,
+    std::vector<size_t>& shifts_each_worker
+);
+
+bool avail_Recurse_Helper_Horizontal(
+    const AvailabilityMatrix& avail,
+    const size_t dailyNeed, //d go on the same row
+    const size_t maxShifts, //m go down the column and count the same ID number
+    DailySchedule& sched,
+    size_t row,
+    size_t col,
+    size_t id_counter,
+    const Worker_T& value,
+    Worker_T real_value,
+    std::vector<size_t>& shifts_each_worker
+);
+
+bool avail_Recurse_Helper_Horizontal_Zero(  //This function runs when the row beginning starts with a zero as its boolean value
+    const AvailabilityMatrix& avail,
+    const size_t dailyNeed, //d go on the same row
+    const size_t maxShifts, //m go down the column and count the same ID number
+    DailySchedule& sched,
+    size_t row,
+    size_t col,
+    size_t id_counter,
+    const Worker_T& value,
+    Worker_T real_value,
+    std::vector<size_t>& shifts_each_worker
+);
+bool avail_Recurse_Helper(const AvailabilityMatrix& avail,
+    const size_t dailyNeed, //d go on the same row
+    const size_t maxShifts, //m go down the column and count the same ID number
+    DailySchedule& sched,
+    size_t row,
+    size_t col,
+    size_t id_counter,
+    const Worker_T& value
 );
 
 #endif
